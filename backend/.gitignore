@@ -1,0 +1,16 @@
+# Python virtual environment
+venv/
+
+# Compiled Python files
+*.pyc
+
+# Logs
+*.log
+
+# Environment variables
+.env
+
+# Dependency directories
+__pycache__/
+dist/
+build/
