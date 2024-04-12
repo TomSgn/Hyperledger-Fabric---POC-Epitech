@@ -1,6 +1,6 @@
 from fastapi import FastAPI, HTTPException
 from xrpl.asyncio.clients import AsyncJsonRpcClient  # If there's an async version
-from xrpl.wallet import generate_faucet_wallet
+from xrpl.asyncio.wallet import generate_faucet_wallet
 from xrpl.models.transactions import Payment
 from xrpl.asyncio.transaction import sign_and_submit, submit_and_wait, autofill  # Use async versions if available
 from xrpl.asyncio.account import get_balance  # Use async versions if available
@@ -23,10 +23,9 @@ async def get_wallet_balance(address: str):
 
 @app.post("/create_wallet")
 async def create_wallet_endpoint():
-    loop = asyncio.get_running_loop()
     try:
         # Run the synchronous function in a separate thread
-        wallet = await loop.run_in_executor(executor, lambda: generate_faucet_wallet(client, debug=True))
+        wallet = await generate_faucet_wallet(client, debug=True)
         return {
             "address": wallet.classic_address,
             "seed": wallet.seed,
