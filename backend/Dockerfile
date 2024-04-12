@@ -1,10 +1,13 @@
-# 
-FROM python:3.9
+# Use an official Python runtime as a parent image
+FROM python:3.7
 
-# 
+# Set the working directory in the container
 WORKDIR /code
 
-COPY requirements.txt /code/requirements.txt
+# Copy the current directory contents into the container at /code
+COPY ./app /code/app
 
-# 
-RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
+RUN pip install fastapi uvicorn
+
+# Run the application
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8080"]
